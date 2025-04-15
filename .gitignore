@@ -1,35 +1,17 @@
 # Gradle
 .gradle/
 build/
-**/build/
-!src/**/build/
 
-# Ignore Gradle GUI config
-gradle-app.setting
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
-# Cache of project
-.gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
+# STS3 (Eclipse)
+.settings/
 .project
-# JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-# IDE
+# IntelliJ
 .idea/
 *.iml
-*.ipr
 *.iws
-
-# VSCode
-.vscode/
+*.ipr
 
 # OS
 .DS_Store
@@ -38,13 +20,19 @@ Thumbs.db
 # Logs
 *.log
 
-# Environment files
+# Environment
 .env
 
-# Kotlin/Java
+# Compiled class files
 *.class
 
 # JAR/WAR/EAR
 *.jar
 *.war
 *.ear
+
+# VSCode (만약 사용한다면)
+.vscode/
+
+# Temp files
+*.swp
