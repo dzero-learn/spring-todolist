@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'war'  // 웹 프로젝트를 위한 war 플러그인
+}
+
+group = 'org.zerock'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform() // JUnit 5 사용 설정
+}
+
+dependencies {
+    implementation 'org.springframework:spring-webmvc:5.3.32'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-core:9.0.84'  // Tomcat 9
+    providedRuntime 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.84' // JSP 지원
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2' // JUnit 5 기본 라이브러리
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2' // 테스트 실행을 위한 엔진
+    
+    implementation 'org.springframework:spring-core:5.3.24'
+    implementation 'org.springframework:spring-context:5.3.24'
+    implementation 'org.springframework:spring-test:5.3.24'
+    
+    // JSTL 태그 라이브러리
+    implementation 'javax.servlet:jstl:1.2'
+    
+    // Lombok 추가
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    testCompileOnly 'org.projectlombok:lombok:1.18.30'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+    
+    // Log4j2 기능
+    implementation 'org.apache.logging.log4j:log4j-api:2.24.2'
+    implementation 'org.apache.logging.log4j:log4j-core:2.24.2'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.24.2'
+    
+    // SLF4J 인터페이스
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.4'
+    
+    implementation 'org.springframework:spring-jdbc:5.3.19' // Spring JDBC (데이터소스 관리용)
+    implementation 'org.springframework:spring-tx:5.3.19' // 트랜잭션 관리 (필요하면 추가)
+    
+    implementation 'org.mybatis:mybatis:3.5.9' // MyBatis 기본 라이브러리
+    implementation 'org.mybatis:mybatis-spring:2.0.7' // MyBatis와 Spring 연동
+    
+    implementation 'org.modelmapper:modelmapper:3.0.0' // dto<->vo 변환
+    implementation 'org.hibernate:hibernate-validator:6.2.1.Final' // dto 검증을 위한 validate관련
+}
