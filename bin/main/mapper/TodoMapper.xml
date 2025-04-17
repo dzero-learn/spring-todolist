@@ -12,4 +12,10 @@
 			#{title}, #{dueDate}, #{writer}
 		)
 	</select>
+	
+	<select id="selectAll" resultType="org.zerock.springex.domain.TodoVO">
+		select tno, title, dueDate, writer, finished
+		  from tbl_todo
+		 order by tno desc;
+	</select>
 </mapper>

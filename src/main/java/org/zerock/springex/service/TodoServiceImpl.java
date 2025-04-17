@@ -1,7 +1,11 @@
 package org.zerock.springex.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zerock.springex.domain.TodoVO;
 import org.zerock.springex.dto.TodoDTO;
@@ -23,5 +27,21 @@ public class TodoServiceImpl implements TodoService{
 		log.info(todoVO);
 		
 		todoMapper.insert(todoVO);
+	}
+	
+	public List<TodoDTO> selectAll() {
+//		List<TodoVO> voList = todoMapper.selectAll();
+//		List<TodoDTO> dtoList = new ArrayList<TodoDTO>();
+//		
+//		for(TodoVO vo : voList) {
+//			dtoList.add(modelMapper.map(vo, TodoDTO.class));
+//			log.info(dtoList);
+//		}
+		
+		List<TodoDTO> dtoList = todoMapper.selectAll().stream()
+				.map(vo -> modelMapper.map(vo, TodoDTO.class))
+				.collect(Collectors.toList());
+		
+		return dtoList;
 	}
 }

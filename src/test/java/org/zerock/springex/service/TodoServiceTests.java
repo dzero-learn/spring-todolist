@@ -1,13 +1,16 @@
 package org.zerock.springex.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.zerock.springex.domain.TodoVO;
 import org.zerock.springex.dto.TodoDTO;
+import org.zerock.springex.mapper.TodoMapper;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -17,6 +20,8 @@ import lombok.extern.log4j.Log4j2;
 public class TodoServiceTests {
 	@Autowired
 	private TodoService todoService;
+	@Autowired
+	private TodoMapper todoMapper;
 	
 	@Test
 	public void testResgister() {
@@ -27,5 +32,12 @@ public class TodoServiceTests {
 				.build();
 		
 		todoService.register(todoDTO);
+	}
+	
+	@Test
+	public void testSelectAll() {
+		List<TodoVO> voList = todoMapper.selectAll();
+		
+		voList.forEach(vo -> log.info(vo));;
 	}
 }
