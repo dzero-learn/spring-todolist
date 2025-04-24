@@ -38,47 +38,55 @@
 				<div class="card">
 					<div class="card-header">Featured</div>
 					<div class="card-body">
-						<div class="input-group mb-3">
-							<span class="input-group-text">Tno</span> <input type="text" class="form-control" name="title" value=<c:out value="${dto.tno}"/>
-								placeholder="tno" readonly>
-						</div>
-
-						<div class="input-group mb-3">
-							<span class="input-group-text">Title</span> <input type="text" class="form-control" name="title" value=<c:out value="${dto.title}"/>
-								placeholder="title" readonly>
-						</div>
-
-						<div class="input-group mb-3">
-							<span class="input-group-text">dueDate</span> <input type="date" class="form-control" name="dueDate" value=<c:out value="${dto.dueDate}"/>
-								placeholder="dueDate" readonly>
-						</div>
-
-						<div class="input-group mb-3">
-							<span class="input-group-text">Writer</span> <input type="text" class="form-control" name="Writer" value=<c:out value="${dto.writer}"/>
-								placeholder="Writer" readonly>
-						</div>
-
-						<div class="form-check">
-							<label class="form-check-label" for="checkDefault"> Finished &nbsp; </label> <input class="form-check-input" type="checkbox" name="finished"
-								${dto.finished?"checked":""} disabled>
-						</div>
-
-						<div class="my-4">
-							<div class="float-end">
-								<button type="button" class="btn btn-primary">Modify</button>
-								<button type="button" class="btn btn-secondary">List</button>
+						<form action="/todo/modify" method="post">
+							<div class="input-group mb-3">
+								<span class="input-group-text">Tno</span> <input type="text" class="form-control" name="tno" value=<c:out value="${dto.tno}"/>
+									placeholder="tno" readonly>
 							</div>
-						</div>
-						
+
+							<div class="input-group mb-3">
+								<span class="input-group-text">Title</span> <input type="text" class="form-control" name="title" value=<c:out value="${dto.title}"/>
+									placeholder="title">
+							</div>
+
+							<div class="input-group mb-3">
+								<span class="input-group-text">dueDate</span> <input type="date" class="form-control" name="dueDate" value=<c:out value="${dto.dueDate}"/>
+									placeholder="Writer">
+							</div>
+
+							<div class="input-group mb-3">
+								<span class="input-group-text">Writer</span> <input type="text" class="form-control" name="Writer" value=<c:out value="${dto.writer}"/>
+									placeholder="Writer" readonly>
+							</div>
+
+							<div class="form-check">
+								<label class="form-check-label" for="checkDefault"> Finished &nbsp; </label> <input class="form-check-input" type="checkbox" name="finished"
+									${dto.finished?"checked":""}>
+							</div>
+
+							<div class="my-4">
+								<div class="float-end">
+									<button type="button" class="btn btn-danger">Remove</button>
+									<button type="button" class="btn btn-primary">Modify</button>
+									<button type="button" class="btn btn-secondary">List</button>
+								</div>
+							</div>
+						</form>
 						<script type="text/javascript">
-							document.querySelector(".btn-primary").addEventListener("click", function(e){
-								self.location = "/todo/modify?tno="+${dto.tno}
-							},false)
-							
-							document.querySelector(".btn-secondary").addEventListener("click", function(e){
-								self.location = "/todo/list";
-							},false)
+							const formObj = document.querySelector("form")
+
+							document.querySelector(".btn-danger")
+									.addEventListener("click", function(e) {
+										e.preventDefault()
+										e.stopPropagation()
+
+										formObj.action = "/todo/remove"
+										formObj.method = "post"
+
+										formObj.submit()
+									}, false)
 						</script>
+
 					</div>
 				</div>
 			</div>

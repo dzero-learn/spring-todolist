@@ -44,4 +44,11 @@ public class TodoMapperTests {
 		
 		log.info(todoMapper.selectOne(tno));
 	}
+	
+	@Test
+	public void testRemove() {
+		long tno = 5L;
+		
+		todoMapper.delete(tno);
+	}
 }
