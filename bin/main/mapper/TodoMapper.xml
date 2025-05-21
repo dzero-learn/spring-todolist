@@ -18,4 +18,12 @@
 		  from tbl_todo
 		 order by tno desc;
 	</select>
+	
+	<update id="update" parameterType="org.zerock.springex.domain.TodoVO">
+		update tbl_todo
+		   set title = #{title}
+		     , dueDate = #{dueDate}
+		     , finished = #{finished}
+		 where tno = #{tno} 
+	</update>
 </mapper>

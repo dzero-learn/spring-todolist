@@ -52,4 +52,21 @@ public class TodoController {
 		
 		return "redirect:/todo/list";
 	}
+	
+	@PostMapping("/modify")
+	public String modifyPost(@Valid TodoDTO todoDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		log.info(todoDTO);
+		
+		if(bindingResult.hasErrors()) {
+			log.info(">>>>>>>>>>>>>>> error 걸림!!!!!");
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+			log.info(bindingResult.getAllErrors());
+			
+			return "redirect:/todo/modify";
+		}
+		
+		todoService.modify(todoDTO);
+		
+		return "redirect:/todo/list";
+	}
 }

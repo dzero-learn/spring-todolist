@@ -7,4 +7,5 @@ import org.zerock.springex.dto.TodoDTO;
 public interface TodoService {
 	void register(TodoDTO todoDTO);
 	List<TodoDTO> selectAll();
+	void modify(TodoDTO todoDTO);
 }
