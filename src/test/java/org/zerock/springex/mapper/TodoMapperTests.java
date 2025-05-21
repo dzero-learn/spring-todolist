@@ -37,4 +37,18 @@ public class TodoMapperTests {
 		
 		todoMapper.insert(todoVO);
 	}
+	
+	@Test
+	public void testselectOne() {
+		long tno = 5L;
+		
+		log.info(todoMapper.selectOne(tno));
+	}
+	
+	@Test
+	public void testRemove() {
+		long tno = 5L;
+		
+		todoMapper.delete(tno);
+	}
 }

@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.springex.dto.TodoDTO;
 import org.zerock.springex.service.TodoService;
@@ -28,7 +29,15 @@ public class TodoController {
 	@GetMapping("/list")
 	public void list(Model model) {
 		log.info("todo list........");
-		model.addAttribute("dtoList", todoService.selectAll());
+		model.addAttribute("dtoList", todoService.getAll());
+	}
+	
+	@GetMapping({"/read","/modify"})
+	public void read(Long tno, Model model) {
+		TodoDTO dto = todoService.getOne(tno);
+		log.info(dto);
+		
+		model.addAttribute("dto", dto);
 	}
 	
 	@GetMapping("/register")
@@ -51,6 +60,15 @@ public class TodoController {
 		todoService.register(todoDTO);
 		
 		return "redirect:/todo/list";
+	}
+	
+	@PostMapping("/remove")
+	public String remove(Long tno, RedirectAttributes redirectAttributes) {
+		log.info("todo Remove...........");
+		log.info(tno);
+		todoService.remove(tno);
+		
+		return "redirect:/todo/list"; 
 	}
 	
 	@PostMapping("/modify")

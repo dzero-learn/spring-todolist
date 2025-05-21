@@ -29,7 +29,7 @@ public class TodoServiceImpl implements TodoService{
 		todoMapper.insert(todoVO);
 	}
 	
-	public List<TodoDTO> selectAll() {
+	public List<TodoDTO> getAll() {
 //		List<TodoVO> voList = todoMapper.selectAll();
 //		List<TodoDTO> dtoList = new ArrayList<TodoDTO>();
 //		
@@ -45,6 +45,18 @@ public class TodoServiceImpl implements TodoService{
 		return dtoList;
 	}
 
+	public TodoDTO getOne(Long tno) {
+		TodoVO todoVO = todoMapper.selectOne(tno);
+		TodoDTO todoDTO = modelMapper.map(todoVO, TodoDTO.class);
+		
+		return todoDTO;
+	}
+
+	@Override
+	public void remove(Long tno) {
+		todoMapper.delete(tno);
+	}
+	
 	@Override
 	public void modify(TodoDTO todoDTO) {
 		TodoVO todoVO = modelMapper.map(todoDTO, TodoVO.class);

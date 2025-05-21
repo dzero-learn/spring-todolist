@@ -6,6 +6,12 @@ import org.zerock.springex.dto.TodoDTO;
 
 public interface TodoService {
 	void register(TodoDTO todoDTO);
-	List<TodoDTO> selectAll();
+
+	List<TodoDTO> getAll();
+
+	TodoDTO getOne(Long tno);
+	
+	void remove(Long tno);
+	
 	void modify(TodoDTO todoDTO);
 }
