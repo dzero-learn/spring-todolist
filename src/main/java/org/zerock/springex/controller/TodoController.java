@@ -1,7 +1,5 @@
 package org.zerock.springex.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -10,8 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.springex.dto.PageRequestDTO;
 import org.zerock.springex.dto.TodoDTO;
 import org.zerock.springex.service.TodoService;
 
@@ -26,10 +24,22 @@ public class TodoController {
 	
 	private final TodoService todoService;
 	
+//	@GetMapping("/list")
+//	public void list(Model model) {
+//		log.info("todo list........");
+//		model.addAttribute("dtoList", todoService.getAll());
+//	}
+	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		log.info("todo list........");
-		model.addAttribute("dtoList", todoService.getAll());
+		
+		if(bindingResult.hasErrors()) {
+			log.info(">>>>>>>>>>>>>>>>>>> error 걸림!!!");
+			pageRequestDTO = PageRequestDTO.builder().build(); // 잘못된 page/size값이 넘어온 경우 page,size 초기값으로 셋팅
+		}
+		
+		model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
 	}
 	
 	@GetMapping({"/read","/modify"})
