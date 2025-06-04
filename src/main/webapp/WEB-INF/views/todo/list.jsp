@@ -39,6 +39,7 @@
 					<div class="card-header">Featured</div>
 					<div class="card-body">
 						<h5 class="card-title">Special titme treatment</h5>
+						<!-- 리스트 컨텐츠 -->
 						<table class="table">
 							<thead>
 								<tr>
@@ -55,12 +56,10 @@
 								</tr>
 							</thead>
 							<tbody class="table-group-divider">
-								<c:forEach items="${dtoList}" var="dto">
+								<c:forEach items="${responseDTO.dtoList}" var="dto">
 									<tr>
 										<th scope="row"><c:out value="${dto.tno}" /></th>
-										<td>
-											<a href="/todo/read?tno=${dto.tno}"><c:out value="${dto.title}" /></a>
-										</td>
+										<td><a href="/todo/read?tno=${dto.tno}" class=""><c:out value="${dto.title}" /></a></td>
 										<td><c:out value="${dto.writer}" /></td>
 										<td><c:out value="${dto.dueDate}" /></td>
 										<td><c:out value="${dto.finished}" /></td>
@@ -68,6 +67,42 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<!-- 페이징 네비게이션 -->
+						<div class="d-flex justify-content-center mt-3 mb-3">
+							<nav aria-label="Page navigation">
+								<ul class="pagination flex-wrap">
+									<!-- 이전 페이지 버튼 : 이전 페이지 없으면 비활성화 -->
+									<c:if test="${responseDTO.prev}">
+										<li class="page-item"><a class="page-link" data-num="${responseDTO.start-1}">Previous</a></li>
+									</c:if>
+									<!-- 페이지 넘버 : 현재 페이지 active -->
+									<c:forEach begin="${responseDTO.start}" end="${responseDTO.end}" var="num">
+										<li class="page-item ${responseDTO.page == num ? 'active':'' }"><a class="page-link" data-num="${num}">${num}</a></li>
+									</c:forEach>
+									<!-- 다음 페이지 버튼 : 다음 페이지 없으면 비활성화-->
+									<c:if test="${responseDTO.next}">
+										<li class="page-item"><a class="page-link" data-num="${responseDTO.end+1}">Next</a></li>
+									</c:if>
+								</ul>
+							</nav>
+						</div>
+						<script>
+							document.querySelector(".pagination").addEventListener("click",function(e){
+								e.preventDefault()
+								e.stopPropagation()
+								
+								const target = e.target
+								
+								// 클릭된 요소가 a태그가 아니면 리턴
+								if(target.tagName !== 'A') {
+									return
+								}
+								
+								const num = target.getAttribute("data-num")
+								
+								self.location=`/todo/list?page=\${num}` //jsp의 el ${num}과 구분하기 위해 \붙여줌
+							},false)
+						</script>
 					</div>
 				</div>
 			</div>
