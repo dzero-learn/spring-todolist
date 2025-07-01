@@ -27,7 +27,20 @@ public class PageRequestDTO {
 	private int size = 10; // 한페이지에 보여줄 게시물 수
 	private int totalCount; // 전체 게시물 수
 	
+	private String link;
+	
 	public int getSkip() {
 		return (page-1)*size;
+	}
+	
+	public String getLink() {
+		if(link == null) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("page=" + this.page);
+			builder.append("&size=" + this.size);
+			link = builder.toString();
+		}
+		
+		return link;
 	}
 }

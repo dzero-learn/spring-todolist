@@ -44,14 +44,13 @@ public class TodoController {
 	}
 	
 	@GetMapping({"/read","/modify"})
-	public void read(PageRequestDTO pageRequestDTO, Long tno, Model model) {
+	public void read(Long tno, PageRequestDTO pageRequestDTO, Model model) {
 		log.info(pageRequestDTO);
 		
 		TodoDTO dto = todoService.getOne(tno);
 		log.info(dto);
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("responseDTO", pageRequestDTO);
 	}
 	
 	@PostMapping("/modify")

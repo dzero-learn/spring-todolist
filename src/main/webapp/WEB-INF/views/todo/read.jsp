@@ -76,7 +76,7 @@
 							},false)
 							
 							document.querySelector(".btn-secondary").addEventListener("click", function(e){
-								self.location = "/todo/list?page="+${pageRequestDTO.page}+"&size="+${pageRequestDTO.size}
+								self.location = "/todo/list?${pageRequestDTO.link}"
 							},false)
 						</script>
 					</div>

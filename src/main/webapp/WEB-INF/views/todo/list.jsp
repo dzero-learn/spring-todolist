@@ -59,7 +59,7 @@
 								<c:forEach items="${responseDTO.dtoList}" var="dto">
 									<tr>
 										<th scope="row"><c:out value="${dto.tno}" /></th>
-										<td><a href="/todo/read?tno=${dto.tno}&page=${responseDTO.page}&size=${responseDTO.size}" class=""><c:out value="${dto.title}" /></a></td>
+										<td><a href="/todo/read?tno=${dto.tno}&${pageRequestDTO.link}" class=""><c:out value="${dto.title}" /></a></td>
 										<td><c:out value="${dto.writer}" /></td>
 										<td><c:out value="${dto.dueDate}" /></td>
 										<td><c:out value="${dto.finished}" /></td>
