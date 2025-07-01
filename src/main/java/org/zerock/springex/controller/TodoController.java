@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.springex.dto.PageRequestDTO;
+import org.zerock.springex.dto.PageResponseDTO;
 import org.zerock.springex.dto.TodoDTO;
 import org.zerock.springex.service.TodoService;
 
@@ -43,11 +44,14 @@ public class TodoController {
 	}
 	
 	@GetMapping({"/read","/modify"})
-	public void read(Long tno, Model model) {
+	public void read(PageRequestDTO pageRequestDTO, Long tno, Model model) {
+		log.info(pageRequestDTO);
+		
 		TodoDTO dto = todoService.getOne(tno);
 		log.info(dto);
 		
 		model.addAttribute("dto", dto);
+		model.addAttribute("responseDTO", pageRequestDTO);
 	}
 	
 	@PostMapping("/modify")
