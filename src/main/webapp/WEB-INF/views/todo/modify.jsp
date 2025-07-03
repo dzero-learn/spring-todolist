@@ -71,6 +71,8 @@
 									<button type="button" class="btn btn-secondary">List</button>
 								</div>
 							</div>
+							<input type="hidden" name="page" value="${pageRequestDTO.page}"/>
+							<input type="hidden" name="size" value="${pageRequestDTO.size}"/>
 						</form>
 						<script type="text/javascript">
 							const formObj = document.querySelector("form")
@@ -99,7 +101,7 @@
 										e.preventDefault()
 										e.stopPropagation()
 
-										self.location = "/todo/list";
+										self.location = `/todo/list?${pageRequestDTO.link}`;
 									}, false)
 						</script>
 
