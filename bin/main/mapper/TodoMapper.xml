@@ -19,7 +19,7 @@
 		select tno, title, dueDate, writer, finished
 		from tbl_todo
 		order by tno desc;
-	</select>	
+	</select>
 
 	<select id="selectOne"
 		resultType="org.zerock.springex.domain.TodoVO">
@@ -27,23 +27,37 @@
 		from tbl_todo
 		where tno = #{tno}
 	</select>
-	
+
 	<delete id="delete">
 		delete from tbl_todo where tno = #{tno}
 	</delete>
-	
-	<update id="update" parameterType="org.zerock.springex.domain.TodoVO">
+
+	<update id="update"
+		parameterType="org.zerock.springex.domain.TodoVO">
 		update tbl_todo
-		   set title = #{title}
-		     , dueDate = #{dueDate}
-		     , finished = #{finished}
-		 where tno = #{tno} 
+		set title = #{title}
+		, dueDate = #{dueDate}
+		, finished = #{finished}
+		where tno = #{tno}
 	</update>
-	
-	<select id="selectList" resultType="org.zerock.springex.domain.TodoVO">
-		select tno, title, dueDate, writer, finished from tbl_todo order by tno desc limit #{skip},#{size}
+
+	<select id="selectList"
+		resultType="org.zerock.springex.domain.TodoVO">
+		select tno, title, dueDate, writer, finished from tbl_todo
+
+		<where>
+			<foreach collection="types" item="type" separator="or">
+				<if test="type == 't'.toString()">
+					title like concat('%',#{keyword},'%')
+				</if>
+				<if test="type == 'w'.toString()">
+					writer like concat('%',#{keyword},'%')
+				</if>
+			</foreach>
+		</where>
+		order by tno desc limit #{skip},#{size}
 	</select>
-	
+
 	<select id="getCount" resultType="int">
 		select count(*) from tbl_todo
 	</select>

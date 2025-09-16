@@ -1,5 +1,7 @@
 package org.zerock.springex.dto;
 
+import java.time.LocalDate;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
@@ -26,6 +28,13 @@ public class PageRequestDTO {
 	@Positive
 	private int size = 10; // 한페이지에 보여줄 게시물 수
 	private int totalCount; // 전체 게시물 수
+	
+	// 검색 필터링 관련
+	private String[] types; // t:제목,w:작가
+	private String keyword; // 검색어
+	private boolean finished; // todo완료여부
+	private LocalDate from; // 기간
+	private LocalDate to; // 기간
 	
 	private String link;
 	

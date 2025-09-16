@@ -59,6 +59,8 @@ public class TodoMapperTests {
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
 				.page(3)
 				.size(10)
+				.types(new String[]{"t","w"})
+				.keyword("aaa")
 				.build();
 		
 		List<TodoVO> voLIst = todoMapper.selectList(pageRequestDTO);
