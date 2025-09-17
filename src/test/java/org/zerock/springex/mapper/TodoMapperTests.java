@@ -60,7 +60,10 @@ public class TodoMapperTests {
 				.page(3)
 				.size(10)
 				.types(new String[]{"t","w"})
-				.keyword("aaa")
+				.keyword("dy")
+				.finished(false)
+				.from(LocalDate.parse("2025-06-01"))
+				.to(LocalDate.parse("2025-06-30"))
 				.build();
 		
 		List<TodoVO> voLIst = todoMapper.selectList(pageRequestDTO);

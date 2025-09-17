@@ -3,6 +3,33 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.zerock.springex.mapper.TodoMapper">
+	<!-- 재사용 SQL -->
+	<sql id="listSearch">
+		<where>
+			<if test="types != null and types.length > 0 and keyword != null and keyword != ''">
+				<foreach collection="types" item="type" open="(" separator=" or " close=")">
+					<if test="type == 't'.toString()">
+						title like concat('%',#{keyword},'%')
+					</if>
+					<if test="type == 'w'.toString()">
+						writer like concat('%',#{keyword},'%')
+					</if>
+				</foreach>
+			</if>
+			<if test="finished != null">
+				<trim prefix="and">
+					finished = #{finished}
+				</trim>
+			</if>
+
+			<if test="from != null and to != null">
+				<trim prefix="and">
+					dueDate BETWEEN #{from} AND #{to}
+				</trim>
+			</if>
+		</where>
+	</sql>
+
 	<select id="getTime" resultType="String">
 		select now()
 	</select>
@@ -36,7 +63,8 @@
 		parameterType="org.zerock.springex.domain.TodoVO">
 		update tbl_todo
 		set title = #{title}
-		, dueDate = #{dueDate}
+		, dueDate =
+		#{dueDate}
 		, finished = #{finished}
 		where tno = #{tno}
 	</update>
@@ -44,17 +72,7 @@
 	<select id="selectList"
 		resultType="org.zerock.springex.domain.TodoVO">
 		select tno, title, dueDate, writer, finished from tbl_todo
-
-		<where>
-			<foreach collection="types" item="type" separator="or">
-				<if test="type == 't'.toString()">
-					title like concat('%',#{keyword},'%')
-				</if>
-				<if test="type == 'w'.toString()">
-					writer like concat('%',#{keyword},'%')
-				</if>
-			</foreach>
-		</where>
+		<include refid="listSearch" />
 		order by tno desc limit #{skip},#{size}
 	</select>
 
