@@ -1,6 +1,9 @@
 package org.zerock.springex.dto;
 
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -47,6 +50,27 @@ public class PageRequestDTO {
 			StringBuilder builder = new StringBuilder();
 			builder.append("page=" + this.page);
 			builder.append("&size=" + this.size);
+			
+			if(types != null && types.length > 0) {
+				String type = Arrays.stream(types)
+						.filter(Objects::nonNull)
+						.map(t->"&value="+t)
+						.collect(Collectors.joining());
+				
+				builder.append(type);
+			}
+			
+			if(keyword != null) {
+				builder.append("&keyword=" + this.keyword);
+			}
+			
+			builder.append("&finished=" + this.finished);
+			
+			if(from != null && to != null) {
+				builder.append("&from=" + this.from);
+				builder.append("&to=" + this.to);
+			}
+			
 			link = builder.toString();
 		}
 		
