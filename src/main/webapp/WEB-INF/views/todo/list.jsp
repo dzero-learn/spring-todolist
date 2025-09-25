@@ -61,44 +61,40 @@
 							<div class="col-12">
 								<div class="form-check form-switch">
 									<input class="form-check-input" type="checkbox"
-										name="finished" value="true" ${param.finished ? 'checked' : ''}><label
+										name="finished" ${pageRequestDTO.finished ? 'checked' : ''}><label
 										class="form-check-label" for="finished"> 완료여부</label>
 								</div>
 							</div>
 
 							<!-- 검색 타입 & 키워드 -->
-							<c:forEach var="val" items="${paramValues.types}">
-								<c:if test="${val == 't'}"><c:set var="titleChecked" value="checked"/></c:if>
-								<c:if test="${val == 'w'}"><c:set var="writerChecked" value="checked"/></c:if>
-							</c:forEach>
 							<div class="col-12 col-md-6">
 								<label class="form-label d-block mb-2">검색 대상</label>
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="checkbox"
-										name="types" value="t" ${titleChecked} > <label
+										name="types" value="t" ${pageRequestDTO.checkType('t') ? 'checked' : ''} > <label
 										class="form-check-label" for="typeTitle">제목</label>
 								</div>
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="checkbox"
-										name="types" value="w" ${writerChecked}> <label
+										name="types" value="w" ${pageRequestDTO.checkType('w') ? 'checked' : ''}> <label
 										class="form-check-label" for="typeWriter">작성자</label>
 								</div>
 							</div>
 
 							<div class="col-12 col-md-6">
 								<label for="keyword" class="form-label">키워드</label> <input
-									type="text" name="keyword" value="${param.keyword}" class="form-control"
+									type="text" name="keyword" value="${pageRequestDTO.keyword}" class="form-control"
 									placeholder="검색어를 입력하세요">
 							</div>
 
 							<!-- 날짜 구간 -->
 							<div class="col-12 col-md-6">
 								<label for="from" class="form-label">시작 날짜</label> <input
-									type="date" name="from" value="${param.from}" class="form-control">
+									type="date" name="from" value="${pageRequestDTO.from}" class="form-control">
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="to" class="form-label">종료 날짜</label> <input
-									type="date" name="to" value="${param.to}" class="form-control">
+									type="date" name="to" value="${pageRequestDTO.to}" class="form-control">
 							</div>
 
 							<!-- 버튼 -->

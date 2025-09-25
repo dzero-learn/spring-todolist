@@ -50,30 +50,43 @@ public class PageRequestDTO {
 			StringBuilder builder = new StringBuilder();
 			builder.append("page=" + this.page);
 			builder.append("&size=" + this.size);
-			
-			if(types != null && types.length > 0) {
-				String type = Arrays.stream(types)
-						.filter(Objects::nonNull)
-						.map(t->"&value="+t)
-						.collect(Collectors.joining());
-				
-				builder.append(type);
-			}
-			
-			if(keyword != null) {
-				builder.append("&keyword=" + this.keyword);
-			}
-			
-			builder.append("&finished=" + this.finished);
-			
-			if(from != null && to != null) {
-				builder.append("&from=" + this.from);
-				builder.append("&to=" + this.to);
-			}
-			
 			link = builder.toString();
 		}
 		
+		StringBuilder builder = new StringBuilder();
+		builder.append("&finished=" + this.finished);
+		link += builder.toString();
+		
+		if(types != null && types.length > 0) {
+			String type = Arrays.stream(types)
+					.filter(Objects::nonNull)
+					.map(t->"&types="+t)
+					.collect(Collectors.joining());
+			
+			builder.append(type);
+			link += builder.toString();
+		}
+		
+		if(keyword != null) {
+			builder.append("&keyword=" + this.keyword);
+			link += builder.toString();
+		}
+		
+		if(from != null && to != null) {
+			builder.append("&from=" + this.from);
+			builder.append("&to=" + this.to);
+			link += builder.toString();
+		}
+		
 		return link;
+	}
+	
+	public boolean checkType(String type) {
+		
+		if(types == null || types.length == 0) {
+			return false;
+		}
+		
+		return Arrays.stream(types).anyMatch(type::equals);
 	}
 }
