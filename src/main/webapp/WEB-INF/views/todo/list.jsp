@@ -41,8 +41,8 @@
 				</nav>
 			</div>
 		</div>
-<!-- 모든 파라미터 출력 -->
-<!-- 
+		<!-- 모든 파라미터 출력 -->
+		<!-- 
 <c:forEach var="p" items="${paramValues}">
     <p>${p.key} = ${p.value[0]}</p>
 </c:forEach>
@@ -60,8 +60,8 @@
 							<!-- 완료 여부 -->
 							<div class="col-12">
 								<div class="form-check form-switch">
-									<input class="form-check-input" type="checkbox"
-										name="finished" ${pageRequestDTO.finished ? 'checked' : ''}><label
+									<input class="form-check-input" type="checkbox" name="finished"
+										${pageRequestDTO.finished ? 'checked' : ''}><label
 										class="form-check-label" for="finished"> 완료여부</label>
 								</div>
 							</div>
@@ -70,37 +70,39 @@
 							<div class="col-12 col-md-6">
 								<label class="form-label d-block mb-2">검색 대상</label>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										name="types" value="t" ${pageRequestDTO.checkType('t') ? 'checked' : ''} > <label
-										class="form-check-label" for="typeTitle">제목</label>
+									<input class="form-check-input" type="checkbox" name="types"
+										value="t" ${pageRequestDTO.checkType('t') ? 'checked' : ''}>
+									<label class="form-check-label" for="typeTitle">제목</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="checkbox"
-										name="types" value="w" ${pageRequestDTO.checkType('w') ? 'checked' : ''}> <label
-										class="form-check-label" for="typeWriter">작성자</label>
+									<input class="form-check-input" type="checkbox" name="types"
+										value="w" ${pageRequestDTO.checkType('w') ? 'checked' : ''}>
+									<label class="form-check-label" for="typeWriter">작성자</label>
 								</div>
 							</div>
 
 							<div class="col-12 col-md-6">
 								<label for="keyword" class="form-label">키워드</label> <input
-									type="text" name="keyword" value="${pageRequestDTO.keyword}" class="form-control"
-									placeholder="검색어를 입력하세요">
+									type="text" name="keyword" value="${pageRequestDTO.keyword}"
+									class="form-control" placeholder="검색어를 입력하세요">
 							</div>
 
 							<!-- 날짜 구간 -->
 							<div class="col-12 col-md-6">
 								<label for="from" class="form-label">시작 날짜</label> <input
-									type="date" name="from" value="${pageRequestDTO.from}" class="form-control">
+									type="date" name="from" value="${pageRequestDTO.from}"
+									class="form-control">
 							</div>
 							<div class="col-12 col-md-6">
 								<label for="to" class="form-label">종료 날짜</label> <input
-									type="date" name="to" value="${pageRequestDTO.to}" class="form-control">
+									type="date" name="to" value="${pageRequestDTO.to}"
+									class="form-control">
 							</div>
 
 							<!-- 버튼 -->
 							<div class="col-12">
 								<div class="d-flex justify-content-end gap-2">
-									<button class="btn btn-outline-secondary" type="reset">Clear</button>
+									<button class="btn btn-outline-secondary clearBtn" type="reset">Clear</button>
 									<button class="btn btn-primary" type="submit">Search</button>
 								</div>
 							</div>
@@ -170,23 +172,6 @@
 								</ul>
 							</nav>
 						</div>
-						<script>
-							document.querySelector(".pagination").addEventListener("click",function(e){
-								e.preventDefault()
-								e.stopPropagation()
-								
-								const target = e.target
-								
-								// 클릭된 요소가 a태그가 아니면 리턴
-								if(target.tagName !== 'A') {
-									return
-								}
-								
-								const num = target.getAttribute("data-num")
-								
-								self.location=`/todo/list?page=\${num}` //jsp의 el ${num}과 구분하기 위해 \붙여줌
-							},false)
-						</script>
 					</div>
 				</div>
 			</div>
@@ -203,5 +188,30 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
 		crossorigin="anonymous"></script>
+	<script>
+		document.querySelector(".pagination").addEventListener("click",function(e){
+			e.preventDefault()
+			e.stopPropagation()
+			
+			const target = e.target
+			
+			// 클릭된 요소가 a태그가 아니면 리턴
+			if(target.tagName !== 'A') {
+				return
+			}
+			
+			const num = target.getAttribute("data-num")
+			
+			self.location=`/todo/list?page=\${num}&${pageRequestDTO.link}` //jsp의 el ${num}과 구분하기 위해 \붙여줌
+		},false)
+		
+		// 검색 조건 초기화
+		document.querySelector(".clearBtn").addEventListener("click",function(e){
+			e.preventDefault()
+			e.stopPropagation()
+			
+			self.location = '/todo/list'
+		},false)
+	</script>
 </body>
 </html>

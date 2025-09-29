@@ -1,5 +1,7 @@
 package org.zerock.springex.dto;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
@@ -46,39 +48,40 @@ public class PageRequestDTO {
 	}
 	
 	public String getLink() {
-		if(link == null) {
-			StringBuilder builder = new StringBuilder();
-			builder.append("page=" + this.page);
-			builder.append("&size=" + this.size);
-			link = builder.toString();
+		StringBuilder builder = new StringBuilder();
+		
+		builder.append("page=" + this.page);
+		builder.append("&size=" + this.size);
+		
+		if(finished) {
+			builder.append("&finished=on");
 		}
 		
-		StringBuilder builder = new StringBuilder();
-		builder.append("&finished=" + this.finished);
-		link += builder.toString();
-		
 		if(types != null && types.length > 0) {
-			String type = Arrays.stream(types)
-					.filter(Objects::nonNull)
-					.map(t->"&types="+t)
-					.collect(Collectors.joining());
-			
-			builder.append(type);
-			link += builder.toString();
+			for(int i = 0; i < types.length; i++) {
+				builder.append("&types=" + types[i]);
+			}
 		}
 		
 		if(keyword != null) {
-			builder.append("&keyword=" + this.keyword);
-			link += builder.toString();
+			try {
+				// 한글 깨짐 처리
+				builder.append("&keyword=" + URLEncoder.encode(keyword,"UTF-8"));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
-		if(from != null && to != null) {
-			builder.append("&from=" + this.from);
-			builder.append("&to=" + this.to);
-			link += builder.toString();
+		if(from != null) {
+			builder.append("&from=" + from.toString());
 		}
 		
-		return link;
+		if(to != null) {
+			builder.append("&to=" + to.toString());
+		}
+		
+		return builder.toString();
 	}
 	
 	public boolean checkType(String type) {

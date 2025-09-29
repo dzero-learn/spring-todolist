@@ -59,15 +59,30 @@ public class TodoMapperTests {
 		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
 				.page(3)
 				.size(10)
-				.types(new String[]{"t","w"})
-				.keyword("dy")
-				.finished(false)
-				.from(LocalDate.parse("2025-06-01"))
-				.to(LocalDate.parse("2025-06-30"))
 				.build();
 		
 		List<TodoVO> voLIst = todoMapper.selectList(pageRequestDTO);
 		
 		voLIst.forEach(todo -> log.info(todo));
+	}
+	
+	@Test
+	public void testSelectSearch() {
+		PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+				.page(3)
+				.size(10)
+				.types(new String[]{"t","w"})
+				.keyword("dy")
+				.finished(false)
+				.from(LocalDate.of(2025,1,1))
+				.to(LocalDate.of(2025,9,29))
+				.build();
+		
+		List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+		
+		voList.forEach(vo -> log.info(vo));
+		
+		log.info(todoMapper.getCount(pageRequestDTO));
+		
 	}
 }

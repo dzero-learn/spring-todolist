@@ -78,5 +78,6 @@
 
 	<select id="getCount" resultType="int">
 		select count(*) from tbl_todo
+		<include refid="listSearch" />
 	</select>
 </mapper>
